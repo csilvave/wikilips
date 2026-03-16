@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Agregar Producto — WikiLips{% endblock %}
+
+{% block extra_head %}
+<style>
+  .form-wrap {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px;
+  }
+  .form-box { width: 100%; max-width: 440px; }
+  .form-box h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+  .form-actions { display: flex; gap: 16px; margin-top: 32px; align-items: center; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-wrap">
+  <div class="form-box">
+    <p class="section-label">Administración</p>
+    <h2>Agregar <em style="font-style:italic; color:var(--rosa)">producto</em></h2>
+    <form method="POST">
+      <div class="field">
+        <label>Marca</label>
+        <select name="marca">
+          {% for marca in marcas %}
+            <option value="{{ marca[0] }}">{{ marca[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label>Nombre del producto</label>
+        <input type="text" name="nombre_producto" placeholder="Ej: Matte Revolution" required>
+      </div>
+      <div class="form-actions">
+        <button type="submit" class="btn-primary">Guardar</button>
+        <a href="/admin_home" class="btn-outline">Cancelar</a>
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

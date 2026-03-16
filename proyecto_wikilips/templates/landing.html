@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% block title %}WikiLips — Tu próximo labial te espera{% endblock %}
+
+{% block extra_head %}
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 82vh;
+    align-items: center;
+    padding: 80px 48px;
+    gap: 80px;
+  }
+
+  .eyebrow {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--rosa);
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+
+  .hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    line-height: 1.05;
+    margin-bottom: 24px;
+  }
+  .hero h1 em { font-style: italic; color: var(--rosa); }
+
+  .hero p {
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--nude-muted);
+    line-height: 1.9;
+    max-width: 380px;
+    margin-bottom: 48px;
+    letter-spacing: 0.3px;
+  }
+
+  .swatch-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    width: 100%;
+    max-width: 380px;
+    margin-left: auto;
+  }
+
+  .swatch {
+    aspect-ratio: 1;
+    border-radius: 2px;
+  }
+
+  hr.divider {
+    border: none;
+    border-top: 0.5px solid var(--nude-faint);
+    margin: 0 48px;
+  }
+
+  .stats {
+    display: flex;
+    gap: 64px;
+    padding: 40px 48px;
+  }
+
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 40px;
+    font-weight: 300;
+    color: var(--nude);
+    display: block;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,235,228,0.35);
+    font-weight: 400;
+  }
+
+  .how-section {
+    padding: 80px 48px;
+    border-top: 0.5px solid var(--nude-faint);
+  }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    margin-top: 48px;
+  }
+
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: rgba(212,130,154,0.2);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 300;
+    color: var(--nude);
+    margin-bottom: 10px;
+  }
+
+  .step p {
+    font-size: 13px;
+    color: var(--nude-muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding: 48px 24px; }
+    .hero h1 { font-size: 52px; }
+    .swatch-grid { margin: 0; }
+    .steps { grid-template-columns: 1fr; }
+    nav { padding: 20px 24px; }
+    .stats { gap: 32px; padding: 32px 24px; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="hero">
+  <div>
+    <p class="eyebrow">Tu próximo labial te espera</p>
+    <h1>Un tono,<br><em>miles de</em><br>alternativas</h1>
+    <p>Encuentra el dupe perfecto para tu labial favorito. Compara por marca, producto y tono — con precisión de color real.</p>
+    <a href="/buscar" class="btn-primary">Empezar ahora</a>
+  </div>
+  <div>
+    <div class="swatch-grid">
+      <div class="swatch" style="background:#8B1A2F"></div>
+      <div class="swatch" style="background:#C45C6A"></div>
+      <div class="swatch" style="background:#E8A0A8"></div>
+      <div class="swatch" style="background:#F5C5C0"></div>
+      <div class="swatch" style="background:#6B1020"></div>
+      <div class="swatch" style="background:#D4829A"></div>
+      <div class="swatch" style="background:#F2D0C8"></div>
+      <div class="swatch" style="background:#C4956A"></div>
+      <div class="swatch" style="background:#A0304A"></div>
+      <div class="swatch" style="background:#E8708A"></div>
+      <div class="swatch" style="background:#D4A090"></div>
+      <div class="swatch" style="background:#B07860"></div>
+      <div class="swatch" style="background:#5A0018"></div>
+      <div class="swatch" style="background:#B84060"></div>
+      <div class="swatch" style="background:#F0B8B0"></div>
+      <div class="swatch" style="background:#E8C8A0"></div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="stats">
+  <div>
+    <span class="stat-num">168</span>
+    <span class="stat-label">Tonos</span>
+  </div>
+  <div>
+    <span class="stat-num">16</span>
+    <span class="stat-label">Marcas</span>
+  </div>
+  <div>
+    <span class="stat-num">4</span>
+    <span class="stat-label">Acabados</span>
+  </div>
+  <div>
+    <span class="stat-num">∞</span>
+    <span class="stat-label">Combinaciones</span>
+  </div>
+</div>
+
+<div class="how-section">
+  <p class="section-label">Cómo funciona</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h3>Selecciona tu labial</h3>
+      <p>Elige la marca, el producto y el tono que ya tienes o que quieres encontrar como dupe.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h3>Nuestro algoritmo busca</h3>
+      <p>Comparamos el color en el espacio HSV con todos los tonos de nuestra base de datos.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h3>Descubre la alternativa</h3>
+      <p>Te mostramos el tono más similar disponible en otra marca o producto.</p>
+    </div>
+  </div>
+</div>
+{% endblock %}

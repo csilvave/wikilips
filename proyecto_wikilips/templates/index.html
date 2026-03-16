@@ -1,0 +1,316 @@
+{% extends "base.html" %}
+{% block title %}Buscar tono similar — WikiLips{% endblock %}
+
+{% block extra_head %}
+<style>
+  .search-hero {
+    padding: 64px 48px 40px;
+    border-bottom: 0.5px solid var(--nude-faint);
+  }
+
+  .search-hero h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 300;
+    color: var(--nude);
+    margin-bottom: 8px;
+  }
+  .search-hero h1 em { font-style: italic; color: var(--rosa); }
+
+  .search-hero p {
+    font-size: 13px;
+    color: var(--nude-muted);
+    font-weight: 300;
+    letter-spacing: 0.3px;
+  }
+
+  .search-body {
+    padding: 48px 48px 0;
+  }
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 24px;
+    align-items: end;
+    margin-bottom: 16px;
+  }
+
+  .tono-with-preview {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 0.5px solid rgba(240,235,228,0.25);
+    padding-bottom: 2px;
+    transition: border-color 0.3s;
+  }
+  .tono-with-preview:focus-within { border-bottom-color: var(--rosa); }
+  .tono-with-preview select {
+    border: none !important;
+    padding: 10px 0;
+    flex: 1;
+  }
+
+  .color-dot {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(240,235,228,0.2);
+    flex-shrink: 0;
+    transition: background 0.3s;
+  }
+
+  /* RESULT SECTION */
+  .result-section {
+    padding: 56px 48px;
+    border-top: 0.5px solid var(--nude-faint);
+    margin-top: 48px;
+  }
+
+  .result-card {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    padding: 36px;
+    border: 0.5px solid var(--nude-faint);
+    max-width: 560px;
+    align-items: center;
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .result-card:hover { border-color: rgba(212,130,154,0.3); }
+
+  .result-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rosa);
+    font-weight: 400;
+  }
+
+  .result-swatch {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(240,235,228,0.15);
+    flex-shrink: 0;
+  }
+
+  .result-brand {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,235,228,0.4);
+    margin-bottom: 6px;
+  }
+
+  .result-product {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    font-weight: 300;
+    color: var(--nude);
+    margin-bottom: 4px;
+  }
+
+  .result-tone {
+    font-size: 14px;
+    color: rgba(240,235,228,0.6);
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .badge {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 0.5px solid rgba(212,130,154,0.35);
+    color: var(--rosa);
+    font-weight: 400;
+  }
+
+  /* COMPARISON */
+  .comparison {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 48px;
+    padding: 24px 0;
+    border-bottom: 0.5px solid var(--nude-faint);
+  }
+
+  .comparison-item { text-align: center; }
+  .comparison-swatch {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    margin: 0 auto 8px;
+    border: 0.5px solid rgba(240,235,228,0.15);
+  }
+  .comparison-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(240,235,228,0.35);
+  }
+  .comparison-arrow {
+    font-size: 18px;
+    color: rgba(240,235,228,0.2);
+  }
+
+  @media (max-width: 768px) {
+    .search-hero, .search-body, .result-section { padding-left: 24px; padding-right: 24px; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<input type="hidden" id="srv_selected_marca" value="{{ selected_marca or '' }}">
+<input type="hidden" id="srv_selected_producto" value="{{ selected_producto or '' }}">
+<input type="hidden" id="srv_selected_tono" value="{{ tono_rgb or '' }}">
+
+<div class="search-hero">
+  <p class="section-label">Buscador de tonos</p>
+  <h1>Encuentra tu <em>dupe</em> perfecto</h1>
+  <p>Selecciona una marca, producto y tono para encontrar la alternativa más similar.</p>
+</div>
+
+<div class="search-body">
+  <form action="/buscar" method="post" onsubmit="return true">
+    <div class="form-grid">
+
+      <div class="field">
+        <label>Marca</label>
+        <select name="marca" id="marca" onchange="cargarProductos()">
+          {% for marca in marcas %}
+            <option value="{{ marca[0] }}" {% if selected_marca and (selected_marca|string == marca[0]|string) %}selected{% endif %}>
+              {{ marca[1] }}
+            </option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <div class="field">
+        <label>Producto</label>
+        <select name="producto" id="producto" onchange="cargarTonos()"></select>
+      </div>
+
+      <div class="field">
+        <label>Tono</label>
+        <div class="tono-with-preview">
+          <div class="color-dot" id="color-dot" style="background: {% if tono_rgb %}#{{ tono_rgb }}{% else %}rgba(240,235,228,0.1){% endif %};"></div>
+          <select name="tono" id="tono" onchange="actualizarTonoSeleccionado()" style="border:none; padding:10px 0;"></select>
+        </div>
+      </div>
+
+      <div>
+        <button type="submit" class="btn-primary" style="width:100%; padding:13px 24px;">Buscar</button>
+      </div>
+
+    </div>
+  </form>
+</div>
+
+{% if color_similar %}
+<div class="result-section">
+  <p class="section-label">Resultado encontrado</p>
+
+  {% if tono_rgb %}
+  <div class="comparison">
+    <div class="comparison-item">
+      <div class="comparison-swatch" style="background:#{{ tono_rgb }}"></div>
+      <span class="comparison-label">Tu tono</span>
+    </div>
+    <div class="comparison-arrow">→</div>
+    <div class="comparison-item">
+      <div class="comparison-swatch" style="background:#{{ color_similar['RGB'] }}"></div>
+      <span class="comparison-label">Alternativa</span>
+    </div>
+  </div>
+  {% endif %}
+
+  <div class="result-card">
+    <span class="result-badge">Mejor alternativa</span>
+    <div class="result-swatch" style="background:#{{ color_similar['RGB'] }}"></div>
+    <div>
+      <p class="result-brand">{{ color_similar['NombreMarca'] }}</p>
+      <p class="result-product">{{ color_similar['NombreProducto'] }}</p>
+      <p class="result-tone">{{ color_similar['Tono'] }}</p>
+      <div class="badge-row">
+        <span class="badge">{{ color_similar['NombreAcabado'] }}</span>
+        <span class="badge">{{ color_similar['NombreFormato'] }}</span>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}
+
+<script>
+var selectedMarca = '';
+var selectedProducto = '';
+var selectedTono = '';
+
+function actualizarTonoSeleccionado() {
+  const hex = document.getElementById('tono').value;
+  const dot = document.getElementById('color-dot');
+  dot.style.background = hex ? `#${hex}` : 'rgba(240,235,228,0.1)';
+}
+
+function setIfExists(selectEl, val) {
+  if (!val) return false;
+  const found = [...selectEl.options].some(o => o.value === val);
+  if (found) { selectEl.value = val; return true; }
+  return false;
+}
+
+function cargarProductos() {
+  const marcaId = document.getElementById('marca').value;
+  fetch('/productos/' + marcaId)
+    .then(r => r.json())
+    .then(productos => {
+      const sel = document.getElementById('producto');
+      sel.innerHTML = '';
+      productos.forEach(([id, nombre]) => {
+        const opt = document.createElement('option');
+        opt.value = id; opt.text = nombre;
+        sel.appendChild(opt);
+      });
+      const srvProd = document.getElementById('srv_selected_producto').value;
+      if (!setIfExists(sel, srvProd) && sel.options.length > 0) sel.selectedIndex = 0;
+      cargarTonos();
+    });
+}
+
+function cargarTonos() {
+  const marcaId = document.getElementById('marca').value;
+  const productoId = document.getElementById('producto').value;
+  fetch('/tonos/' + marcaId + '/' + productoId)
+    .then(r => r.json())
+    .then(tonos => {
+      const sel = document.getElementById('tono');
+      sel.innerHTML = '';
+      tonos.forEach(([rgb, nombre]) => {
+        const opt = document.createElement('option');
+        opt.value = rgb; opt.text = nombre;
+        sel.appendChild(opt);
+      });
+      const srvTono = document.getElementById('srv_selected_tono').value;
+      if (!setIfExists(sel, srvTono) && sel.options.length > 0) sel.selectedIndex = 0;
+      actualizarTonoSeleccionado();
+    });
+}
+
+window.onload = function() {
+  const srvMarca = document.getElementById('srv_selected_marca').value;
+  if (srvMarca) document.getElementById('marca').value = srvMarca;
+  cargarProductos();
+};
+</script>
+{% endblock %}

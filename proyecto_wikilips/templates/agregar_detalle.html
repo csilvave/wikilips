@@ -1,0 +1,138 @@
+{% extends "base.html" %}
+{% block title %}Agregar Tono — WikiLips{% endblock %}
+
+{% block extra_head %}
+<style>
+  .form-wrap {
+    padding: 64px 48px;
+    max-width: 700px;
+  }
+  .form-wrap h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    margin-bottom: 40px;
+  }
+  .form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .rgb-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 16px;
+  }
+  .color-preview-large {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(240,235,228,0.2);
+    margin-bottom: 16px;
+    transition: background 0.3s;
+  }
+  .form-actions { display: flex; gap: 16px; margin-top: 32px; align-items: center; }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="form-wrap">
+  <p class="section-label">Administración</p>
+  <h2>Agregar <em style="font-style:italic; color:var(--rosa)">tono</em></h2>
+
+  <form method="POST">
+    <div class="form-grid-2" style="margin-bottom:0">
+      <div class="field">
+        <label>Marca</label>
+        <select name="marca" id="marca-select" onchange="cargarProductos()">
+          {% for marca in marcas %}
+            <option value="{{ marca[0] }}">{{ marca[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label>Producto</label>
+        <select name="producto" id="producto-select">
+          {% for producto in productos %}
+            <option value="{{ producto[0] }}">{{ producto[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:24px">
+      <label>Nombre del tono</label>
+      <input type="text" name="nombre_tono" placeholder="Ej: Ruby Woo" required>
+    </div>
+
+    <div class="form-grid-2">
+      <div class="field">
+        <label>Acabado</label>
+        <select name="acabado">
+          {% for acabado in acabados %}
+            <option value="{{ acabado[0] }}">{{ acabado[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field">
+        <label>Formato</label>
+        <select name="formato">
+          {% for formato in formatos %}
+            <option value="{{ formato[0] }}">{{ formato[1] }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+
+    <div>
+      <p class="section-label" style="margin-bottom:16px">Color RGB (valores hex)</p>
+      <div class="color-preview-large" id="color-preview" style="background:#888888"></div>
+      <div class="rgb-row">
+        <div class="field">
+          <label>R (rojo)</label>
+          <input type="text" name="r" id="r" maxlength="2" placeholder="FF" oninput="actualizarColor()">
+        </div>
+        <div class="field">
+          <label>G (verde)</label>
+          <input type="text" name="g" id="g" maxlength="2" placeholder="00" oninput="actualizarColor()">
+        </div>
+        <div class="field">
+          <label>B (azul)</label>
+          <input type="text" name="b" id="b" maxlength="2" placeholder="00" oninput="actualizarColor()">
+        </div>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary">Guardar tono</button>
+      <a href="/admin_home" class="btn-outline">Cancelar</a>
+    </div>
+  </form>
+</div>
+
+<script>
+function actualizarColor() {
+  const r = document.getElementById('r').value || '88';
+  const g = document.getElementById('g').value || '88';
+  const b = document.getElementById('b').value || '88';
+  if (r.length === 2 && g.length === 2 && b.length === 2) {
+    document.getElementById('color-preview').style.background = `#${r}${g}${b}`;
+  }
+}
+
+function cargarProductos() {
+  const marcaId = document.getElementById('marca-select').value;
+  fetch('/productos/' + marcaId)
+    .then(r => r.json())
+    .then(productos => {
+      const sel = document.getElementById('producto-select');
+      sel.innerHTML = '';
+      productos.forEach(([id, nombre]) => {
+        const opt = document.createElement('option');
+        opt.value = id; opt.text = nombre;
+        sel.appendChild(opt);
+      });
+    });
+}
+</script>
+{% endblock %}
