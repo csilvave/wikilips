@@ -56,28 +56,32 @@ def hsv_distance(color1, color2):
     return np.sqrt(dh**2 + ds**2 + dv**2)
 
 def hex_to_rgb(hex_str):
+    hex_str = hex_str.strip().lstrip('#')
     return (int(hex_str[:2], 16), int(hex_str[2:4], 16), int(hex_str[4:], 16))
 
-def buscar_color_similar(marca_id, producto_id, tono_rgb):
+def buscar_colores_similares(marca_id, producto_id, tono_rgb, n=3):
     detalles = obtener_detalles_desde_bd()
     tono_rgb_num = hex_to_rgb(tono_rgb)
-    min_distancia = float('inf')
-    color_similar = None
+    resultados = []
+
     for fila in detalles:
         r, g, b, marca, producto, tono, rgb, acabado, formato = fila
-        if (marca_id, producto_id, tono_rgb) == (marca, producto, tono):
+        if (marca_id, producto_id, tono_rgb.upper()) == (marca, producto, rgb.upper()):
             continue
-        distancia = hsv_distance(tono_rgb_num, hex_to_rgb(rgb))
+        try:
+            distancia = hsv_distance(tono_rgb_num, hex_to_rgb(rgb))
+        except Exception:
+            continue
         if distancia == 0:
             continue
-        if distancia < min_distancia:
-            min_distancia = distancia
-            color_similar = {
-                'NombreMarca': marca, 'NombreProducto': producto,
-                'Tono': tono, 'RGB': rgb,
-                'NombreAcabado': acabado, 'NombreFormato': formato
-            }
-    return color_similar
+        resultados.append((distancia, {
+            'NombreMarca': marca, 'NombreProducto': producto,
+            'Tono': tono, 'RGB': rgb,
+            'NombreAcabado': acabado, 'NombreFormato': formato
+        }))
+
+    resultados.sort(key=lambda x: x[0])
+    return [r[1] for r in resultados[:n]]
 
 # ─────────────────────────────────────────
 # Rutas públicas
@@ -94,12 +98,14 @@ def buscar():
         marca_id    = int(request.form['marca'])
         producto_id = int(request.form['producto'])
         tono_rgb    = request.form['tono']
-        color_similar = buscar_color_similar(marca_id, producto_id, tono_rgb)
-        return render_template('index.html', marcas=marcas, color_similar=color_similar,
-                               tono_rgb=tono_rgb, selected_marca=str(marca_id),
+        colores_similares = buscar_colores_similares(marca_id, producto_id, tono_rgb, n=3)
+        return render_template('index.html', marcas=marcas,
+                               colores_similares=colores_similares,
+                               tono_rgb=tono_rgb,
+                               selected_marca=str(marca_id),
                                selected_producto=str(producto_id))
     return render_template('index.html', marcas=marcas,
-                           color_similar=None, selected_marca=None, selected_producto=None)
+                           colores_similares=[], selected_marca=None, selected_producto=None)
 
 @app.route('/productos/<int:marca_id>')
 def productos_por_marca(marca_id):
