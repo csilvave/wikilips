@@ -7,7 +7,6 @@
     padding: 64px 48px 40px;
     border-bottom: 0.5px solid var(--nude-faint);
   }
-
   .search-hero h1 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 48px;
@@ -16,18 +15,13 @@
     margin-bottom: 8px;
   }
   .search-hero h1 em { font-style: italic; color: var(--rosa); }
-
   .search-hero p {
     font-size: 13px;
     color: var(--nude-muted);
     font-weight: 300;
     letter-spacing: 0.3px;
   }
-
-  .search-body {
-    padding: 48px 48px 0;
-  }
-
+  .search-body { padding: 48px 48px 0; }
   .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr auto;
@@ -35,7 +29,6 @@
     align-items: end;
     margin-bottom: 16px;
   }
-
   .tono-with-preview {
     display: flex;
     align-items: center;
@@ -45,15 +38,9 @@
     transition: border-color 0.3s;
   }
   .tono-with-preview:focus-within { border-bottom-color: var(--rosa); }
-  .tono-with-preview select {
-    border: none !important;
-    padding: 10px 0;
-    flex: 1;
-  }
-
+  .tono-with-preview select { border: none !important; padding: 10px 0; flex: 1; }
   .color-dot {
-    width: 28px;
-    height: 28px;
+    width: 28px; height: 28px;
     border-radius: 50%;
     border: 0.5px solid rgba(240,235,228,0.2);
     flex-shrink: 0;
@@ -67,74 +54,7 @@
     margin-top: 48px;
   }
 
-  .result-card {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 32px;
-    padding: 36px;
-    border: 0.5px solid var(--nude-faint);
-    max-width: 560px;
-    align-items: center;
-    position: relative;
-    transition: border-color 0.3s;
-  }
-  .result-card:hover { border-color: rgba(212,130,154,0.3); }
-
-  .result-badge {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--rosa);
-    font-weight: 400;
-  }
-
-  .result-swatch {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 0.5px solid rgba(240,235,228,0.15);
-    flex-shrink: 0;
-  }
-
-  .result-brand {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(240,235,228,0.4);
-    margin-bottom: 6px;
-  }
-
-  .result-product {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 26px;
-    font-weight: 300;
-    color: var(--nude);
-    margin-bottom: 4px;
-  }
-
-  .result-tone {
-    font-size: 14px;
-    color: rgba(240,235,228,0.6);
-    font-weight: 300;
-    margin-bottom: 12px;
-  }
-
-  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
-
-  .badge {
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 5px 12px;
-    border: 0.5px solid rgba(212,130,154,0.35);
-    color: var(--rosa);
-    font-weight: 400;
-  }
-
-  /* COMPARISON */
+  /* Comparison row */
   .comparison {
     display: flex;
     align-items: center;
@@ -143,11 +63,9 @@
     padding: 24px 0;
     border-bottom: 0.5px solid var(--nude-faint);
   }
-
   .comparison-item { text-align: center; }
   .comparison-swatch {
-    width: 56px;
-    height: 56px;
+    width: 56px; height: 56px;
     border-radius: 50%;
     margin: 0 auto 8px;
     border: 0.5px solid rgba(240,235,228,0.15);
@@ -158,14 +76,75 @@
     text-transform: uppercase;
     color: rgba(240,235,228,0.35);
   }
-  .comparison-arrow {
-    font-size: 18px;
-    color: rgba(240,235,228,0.2);
+  .comparison-arrow { font-size: 18px; color: rgba(240,235,228,0.2); }
+
+  /* Results grid */
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .result-card {
+    padding: 28px;
+    border: 0.5px solid var(--nude-faint);
+    position: relative;
+    transition: border-color 0.3s;
+  }
+  .result-card:hover { border-color: rgba(212,130,154,0.3); }
+  .result-card.first { border-color: rgba(212,130,154,0.2); }
+
+  .result-badge {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rosa);
+    font-weight: 400;
+    margin-bottom: 16px;
+    display: block;
+  }
+  .result-swatch {
+    width: 56px; height: 56px;
+    border-radius: 50%;
+    border: 0.5px solid rgba(240,235,228,0.15);
+    margin-bottom: 16px;
+  }
+  .result-brand {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,235,228,0.4);
+    margin-bottom: 4px;
+  }
+  .result-product {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--nude);
+    margin-bottom: 4px;
+    line-height: 1.2;
+  }
+  .result-tone {
+    font-size: 13px;
+    color: rgba(240,235,228,0.6);
+    font-weight: 300;
+    margin-bottom: 12px;
+  }
+  .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
+  .badge {
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 0.5px solid rgba(212,130,154,0.35);
+    color: var(--rosa);
+    font-weight: 400;
   }
 
   @media (max-width: 768px) {
     .search-hero, .search-body, .result-section { padding-left: 24px; padding-right: 24px; }
     .form-grid { grid-template-columns: 1fr; }
+    .results-grid { grid-template-columns: 1fr; }
   }
 </style>
 {% endblock %}
@@ -179,13 +158,12 @@
 <div class="search-hero">
   <p class="section-label">Buscador de tonos</p>
   <h1>Encuentra tu <em>dupe</em> perfecto</h1>
-  <p>Selecciona una marca, producto y tono para encontrar la alternativa más similar.</p>
+  <p>Selecciona una marca, producto y tono para encontrar las alternativas más similares.</p>
 </div>
 
 <div class="search-body">
-  <form action="/buscar" method="post" onsubmit="return true">
+  <form action="/buscar" method="post">
     <div class="form-grid">
-
       <div class="field">
         <label>Marca</label>
         <select name="marca" id="marca" onchange="cargarProductos()">
@@ -196,12 +174,10 @@
           {% endfor %}
         </select>
       </div>
-
       <div class="field">
         <label>Producto</label>
         <select name="producto" id="producto" onchange="cargarTonos()"></select>
       </div>
-
       <div class="field">
         <label>Tono</label>
         <div class="tono-with-preview">
@@ -209,18 +185,16 @@
           <select name="tono" id="tono" onchange="actualizarTonoSeleccionado()" style="border:none; padding:10px 0;"></select>
         </div>
       </div>
-
       <div>
         <button type="submit" class="btn-primary" style="width:100%; padding:13px 24px;">Buscar</button>
       </div>
-
     </div>
   </form>
 </div>
 
-{% if color_similar %}
+{% if colores_similares %}
 <div class="result-section">
-  <p class="section-label">Resultado encontrado</p>
+  <p class="section-label">Alternativas encontradas</p>
 
   {% if tono_rgb %}
   <div class="comparison">
@@ -229,34 +203,37 @@
       <span class="comparison-label">Tu tono</span>
     </div>
     <div class="comparison-arrow">→</div>
+    {% for color in colores_similares %}
     <div class="comparison-item">
-      <div class="comparison-swatch" style="background:#{{ color_similar['RGB'] }}"></div>
-      <span class="comparison-label">Alternativa</span>
+      <div class="comparison-swatch" style="background:#{{ color['RGB'] }}"></div>
+      <span class="comparison-label">Opción {{ loop.index }}</span>
     </div>
+    {% if not loop.last %}<div class="comparison-arrow" style="font-size:12px; color:rgba(240,235,228,0.1)">|</div>{% endif %}
+    {% endfor %}
   </div>
   {% endif %}
 
-  <div class="result-card">
-    <span class="result-badge">Mejor alternativa</span>
-    <div class="result-swatch" style="background:#{{ color_similar['RGB'] }}"></div>
-    <div>
-      <p class="result-brand">{{ color_similar['NombreMarca'] }}</p>
-      <p class="result-product">{{ color_similar['NombreProducto'] }}</p>
-      <p class="result-tone">{{ color_similar['Tono'] }}</p>
+  <div class="results-grid">
+    {% for color in colores_similares %}
+    <div class="result-card {% if loop.first %}first{% endif %}">
+      <span class="result-badge">
+        {% if loop.first %}Mejor alternativa{% elif loop.index == 2 %}2.ª opción{% else %}3.ª opción{% endif %}
+      </span>
+      <div class="result-swatch" style="background:#{{ color['RGB'] }}"></div>
+      <p class="result-brand">{{ color['NombreMarca'] }}</p>
+      <p class="result-product">{{ color['NombreProducto'] }}</p>
+      <p class="result-tone">{{ color['Tono'] }}</p>
       <div class="badge-row">
-        <span class="badge">{{ color_similar['NombreAcabado'] }}</span>
-        <span class="badge">{{ color_similar['NombreFormato'] }}</span>
+        <span class="badge">{{ color['NombreAcabado'] }}</span>
+        <span class="badge">{{ color['NombreFormato'] }}</span>
       </div>
     </div>
+    {% endfor %}
   </div>
 </div>
 {% endif %}
 
 <script>
-var selectedMarca = '';
-var selectedProducto = '';
-var selectedTono = '';
-
 function actualizarTonoSeleccionado() {
   const hex = document.getElementById('tono').value;
   const dot = document.getElementById('color-dot');
