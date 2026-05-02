@@ -45,6 +45,12 @@ def obtener_detalles_desde_bd():
             'JOIN Formato AS F ON D.Formato = F.ID'
         ).fetchall()
 
+def obtener_stats():
+    with get_db() as conn:
+        tonos  = conn.execute('SELECT COUNT(*) FROM Detalle').fetchone()[0]
+        marcas = conn.execute('SELECT COUNT(*) FROM Marca').fetchone()[0]
+        return {'tonos': tonos, 'marcas': marcas}
+
 # ─────────────────────────────────────────
 # Algoritmo de matching de colores (HSV)
 # ─────────────────────────────────────────
@@ -59,7 +65,8 @@ def hex_to_rgb(hex_str):
     hex_str = hex_str.strip().lstrip('#')
     return (int(hex_str[:2], 16), int(hex_str[2:4], 16), int(hex_str[4:], 16))
 
-def buscar_colores_similares(marca_id, producto_id, tono_rgb, n=3):
+def buscar_colores_similares(marca_id, producto_id, tono_rgb, n=3,
+                              filtro_acabados=None, filtro_formatos=None):
     detalles = obtener_detalles_desde_bd()
     tono_rgb_num = hex_to_rgb(tono_rgb)
     resultados = []
@@ -67,6 +74,11 @@ def buscar_colores_similares(marca_id, producto_id, tono_rgb, n=3):
     for fila in detalles:
         r, g, b, marca, producto, tono, rgb, acabado, formato = fila
         if (marca_id, producto_id, tono_rgb.upper()) == (marca, producto, rgb.upper()):
+            continue
+        # Aplicar filtros si existen
+        if filtro_acabados and acabado not in filtro_acabados:
+            continue
+        if filtro_formatos and formato not in filtro_formatos:
             continue
         try:
             distancia = hsv_distance(tono_rgb_num, hex_to_rgb(rgb))
@@ -89,23 +101,44 @@ def buscar_colores_similares(marca_id, producto_id, tono_rgb, n=3):
 
 @app.route('/')
 def landing():
-    return render_template('landing.html')
+    stats = obtener_stats()
+    return render_template('landing.html', stats=stats)
 
 @app.route('/buscar', methods=['GET', 'POST'])
 def buscar():
-    marcas = obtener_marcas()
+    marcas   = obtener_marcas()
+    acabados = obtener_acabados()
+    formatos = obtener_formatos()
+
     if request.method == 'POST':
         marca_id    = int(request.form['marca'])
         producto_id = int(request.form['producto'])
         tono_rgb    = request.form['tono']
-        colores_similares = buscar_colores_similares(marca_id, producto_id, tono_rgb, n=3)
-        return render_template('index.html', marcas=marcas,
-                               colores_similares=colores_similares,
-                               tono_rgb=tono_rgb,
-                               selected_marca=str(marca_id),
-                               selected_producto=str(producto_id))
-    return render_template('index.html', marcas=marcas,
-                           colores_similares=[], selected_marca=None, selected_producto=None)
+
+        # Filtros opcionales (listas de nombres seleccionados)
+        filtro_acabados = request.form.getlist('filtro_acabado') or None
+        filtro_formatos = request.form.getlist('filtro_formato') or None
+
+        colores_similares = buscar_colores_similares(
+            marca_id, producto_id, tono_rgb, n=3,
+            filtro_acabados=filtro_acabados,
+            filtro_formatos=filtro_formatos
+        )
+        return render_template('index.html',
+            marcas=marcas, acabados=acabados, formatos=formatos,
+            colores_similares=colores_similares,
+            tono_rgb=tono_rgb,
+            selected_marca=str(marca_id),
+            selected_producto=str(producto_id),
+            filtro_acabados=filtro_acabados or [],
+            filtro_formatos=filtro_formatos or []
+        )
+
+    return render_template('index.html',
+        marcas=marcas, acabados=acabados, formatos=formatos,
+        colores_similares=[], selected_marca=None, selected_producto=None,
+        filtro_acabados=[], filtro_formatos=[]
+    )
 
 @app.route('/productos/<int:marca_id>')
 def productos_por_marca(marca_id):
@@ -176,10 +209,10 @@ def agregar_producto():
 
 @app.route('/agregar-detalle', methods=['GET', 'POST'])
 def agregar_detalle():
-    marcas = obtener_marcas()
+    marcas    = obtener_marcas()
     productos = obtener_productos()
-    acabados = obtener_acabados()
-    formatos = obtener_formatos()
+    acabados  = obtener_acabados()
+    formatos  = obtener_formatos()
     if request.method == 'POST':
         try:
             r = format(int(request.form['r'], 16), '02X')
@@ -211,7 +244,7 @@ def agregar_detalle():
 
 @app.route('/editar/<int:detalle_id>', methods=['GET', 'POST'])
 def editar_registro(detalle_id):
-    marcas = obtener_marcas()
+    marcas   = obtener_marcas()
     acabados = obtener_acabados()
     formatos = obtener_formatos()
     with get_db() as conn:
