@@ -47,9 +47,10 @@ def obtener_detalles_desde_bd():
 
 def obtener_stats():
     with get_db() as conn:
-        tonos  = conn.execute('SELECT COUNT(*) FROM Detalle').fetchone()[0]
-        marcas = conn.execute('SELECT COUNT(*) FROM Marca').fetchone()[0]
-        return {'tonos': tonos, 'marcas': marcas}
+        tonos   = conn.execute('SELECT COUNT(*) FROM Detalle').fetchone()[0]
+        marcas  = conn.execute('SELECT COUNT(*) FROM Marca').fetchone()[0]
+        acabados = conn.execute('SELECT COUNT(*) FROM Acabado').fetchone()[0]
+        return {'tonos': tonos, 'marcas': marcas, 'acabados': acabados}
 
 # ─────────────────────────────────────────
 # Algoritmo de matching de colores (HSV)
