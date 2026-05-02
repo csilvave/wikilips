@@ -15,20 +15,18 @@
     margin-bottom: 8px;
   }
   .search-hero h1 em { font-style: italic; color: var(--rosa); }
-  .search-hero p {
-    font-size: 13px;
-    color: var(--nude-muted);
-    font-weight: 300;
-    letter-spacing: 0.3px;
-  }
+  .search-hero p { font-size: 13px; color: var(--nude-muted); font-weight: 300; letter-spacing: 0.3px; }
+
   .search-body { padding: 48px 48px 0; }
+
   .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr auto;
     gap: 24px;
     align-items: end;
-    margin-bottom: 16px;
+    margin-bottom: 32px;
   }
+
   .tono-with-preview {
     display: flex;
     align-items: center;
@@ -39,6 +37,7 @@
   }
   .tono-with-preview:focus-within { border-bottom-color: var(--rosa); }
   .tono-with-preview select { border: none !important; padding: 10px 0; flex: 1; }
+
   .color-dot {
     width: 28px; height: 28px;
     border-radius: 50%;
@@ -47,14 +46,71 @@
     transition: background 0.3s;
   }
 
-  /* RESULT SECTION */
+  /* FILTROS */
+  .filtros-section {
+    border-top: 0.5px solid var(--nude-faint);
+    padding-top: 24px;
+    margin-bottom: 32px;
+  }
+  .filtros-title {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,235,228,0.4);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .filtros-title:hover { color: rgba(240,235,228,0.7); }
+  .filtros-arrow { transition: transform 0.3s; font-size: 10px; }
+  .filtros-arrow.open { transform: rotate(180deg); }
+
+  .filtros-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    display: none;
+  }
+  .filtros-grid.open { display: grid; }
+
+  .filtros-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(240,235,228,0.4);
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .chips-row { display: flex; flex-wrap: wrap; gap: 8px; }
+
+  .chip {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    border: 0.5px solid rgba(240,235,228,0.2);
+    color: rgba(240,235,228,0.45);
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .chip:hover { border-color: var(--rosa); color: var(--rosa); }
+  .chip.selected {
+    border-color: var(--rosa);
+    color: var(--negro);
+    background: var(--rosa);
+  }
+
+  /* RESULTS */
   .result-section {
     padding: 56px 48px;
     border-top: 0.5px solid var(--nude-faint);
     margin-top: 48px;
   }
-
-  /* Comparison row */
   .comparison {
     display: flex;
     align-items: center;
@@ -70,21 +126,10 @@
     margin: 0 auto 8px;
     border: 0.5px solid rgba(240,235,228,0.15);
   }
-  .comparison-label {
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(240,235,228,0.35);
-  }
+  .comparison-label { font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(240,235,228,0.35); }
   .comparison-arrow { font-size: 18px; color: rgba(240,235,228,0.2); }
 
-  /* Results grid */
-  .results-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 16px;
-  }
-
+  .results-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
   .result-card {
     padding: 28px;
     border: 0.5px solid var(--nude-faint);
@@ -93,58 +138,28 @@
   }
   .result-card:hover { border-color: rgba(212,130,154,0.3); }
   .result-card.first { border-color: rgba(212,130,154,0.2); }
-
-  .result-badge {
-    font-size: 9px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--rosa);
-    font-weight: 400;
-    margin-bottom: 16px;
-    display: block;
-  }
-  .result-swatch {
-    width: 56px; height: 56px;
-    border-radius: 50%;
-    border: 0.5px solid rgba(240,235,228,0.15);
-    margin-bottom: 16px;
-  }
-  .result-brand {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: rgba(240,235,228,0.4);
-    margin-bottom: 4px;
-  }
-  .result-product {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px;
-    font-weight: 300;
-    color: var(--nude);
-    margin-bottom: 4px;
-    line-height: 1.2;
-  }
-  .result-tone {
-    font-size: 13px;
-    color: rgba(240,235,228,0.6);
-    font-weight: 300;
-    margin-bottom: 12px;
-  }
+  .result-badge { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--rosa); font-weight: 400; margin-bottom: 16px; display: block; }
+  .result-swatch { width: 56px; height: 56px; border-radius: 50%; border: 0.5px solid rgba(240,235,228,0.15); margin-bottom: 16px; }
+  .result-brand { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; color: rgba(240,235,228,0.4); margin-bottom: 4px; }
+  .result-product { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 300; color: var(--nude); margin-bottom: 4px; line-height: 1.2; }
+  .result-tone { font-size: 13px; color: rgba(240,235,228,0.6); font-weight: 300; margin-bottom: 12px; }
   .badge-row { display: flex; gap: 8px; flex-wrap: wrap; }
-  .badge {
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    padding: 4px 10px;
-    border: 0.5px solid rgba(212,130,154,0.35);
-    color: var(--rosa);
-    font-weight: 400;
+  .badge { font-size: 9px; letter-spacing: 2px; text-transform: uppercase; padding: 4px 10px; border: 0.5px solid rgba(212,130,154,0.35); color: var(--rosa); font-weight: 400; }
+
+  .no-results {
+    padding: 40px;
+    text-align: center;
+    border: 0.5px solid var(--nude-faint);
+    color: rgba(240,235,228,0.4);
+    font-size: 13px;
+    letter-spacing: 0.5px;
   }
 
   @media (max-width: 768px) {
     .search-hero, .search-body, .result-section { padding-left: 24px; padding-right: 24px; }
     .form-grid { grid-template-columns: 1fr; }
     .results-grid { grid-template-columns: 1fr; }
+    .filtros-grid { grid-template-columns: 1fr; }
   }
 </style>
 {% endblock %}
@@ -162,7 +177,7 @@
 </div>
 
 <div class="search-body">
-  <form action="/buscar" method="post">
+  <form action="/buscar" method="post" id="search-form">
     <div class="form-grid">
       <div class="field">
         <label>Marca</label>
@@ -189,14 +204,47 @@
         <button type="submit" class="btn-primary" style="width:100%; padding:13px 24px;">Buscar</button>
       </div>
     </div>
+
+    <!-- FILTROS -->
+    <div class="filtros-section">
+      <div class="filtros-title" onclick="toggleFiltros()">
+        <span>Filtros opcionales</span>
+        <span class="filtros-arrow" id="filtros-arrow">▼</span>
+      </div>
+      <div class="filtros-grid" id="filtros-grid">
+        <div>
+          <span class="filtros-label">Acabado</span>
+          <div class="chips-row" id="chips-acabado">
+            {% for acabado in acabados %}
+            <div class="chip {% if acabado[1] in filtro_acabados %}selected{% endif %}"
+                 onclick="toggleChip(this, 'filtro_acabado', '{{ acabado[1] }}')">
+              {{ acabado[1] }}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+        <div>
+          <span class="filtros-label">Formato</span>
+          <div class="chips-row" id="chips-formato">
+            {% for formato in formatos %}
+            <div class="chip {% if formato[1] in filtro_formatos %}selected{% endif %}"
+                 onclick="toggleChip(this, 'filtro_formato', '{{ formato[1] }}')">
+              {{ formato[1] }}
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
   </form>
 </div>
 
-{% if colores_similares %}
+{% if tono_rgb is not none %}
 <div class="result-section">
   <p class="section-label">Alternativas encontradas</p>
 
-  {% if tono_rgb %}
+  {% if colores_similares %}
   <div class="comparison">
     <div class="comparison-item">
       <div class="comparison-swatch" style="background:#{{ tono_rgb }}"></div>
@@ -211,7 +259,6 @@
     {% if not loop.last %}<div class="comparison-arrow" style="font-size:12px; color:rgba(240,235,228,0.1)">|</div>{% endif %}
     {% endfor %}
   </div>
-  {% endif %}
 
   <div class="results-grid">
     {% for color in colores_similares %}
@@ -230,10 +277,62 @@
     </div>
     {% endfor %}
   </div>
+
+  {% else %}
+  <div class="no-results">
+    No se encontraron alternativas con los filtros seleccionados. Intenta con otros filtros.
+  </div>
+  {% endif %}
+
 </div>
 {% endif %}
 
 <script>
+// ── Filtros ──
+function toggleFiltros() {
+  const grid  = document.getElementById('filtros-grid');
+  const arrow = document.getElementById('filtros-arrow');
+  grid.classList.toggle('open');
+  arrow.classList.toggle('open');
+}
+
+function toggleChip(chip, inputName, value) {
+  chip.classList.toggle('selected');
+  // Sync hidden inputs
+  syncHiddenInputs(inputName);
+}
+
+function syncHiddenInputs(inputName) {
+  // Remove old hidden inputs for this name
+  document.querySelectorAll(`input[name="${inputName}"]`).forEach(el => el.remove());
+  // Add one per selected chip
+  const form = document.getElementById('search-form');
+  document.querySelectorAll(`.chip.selected`).forEach(chip => {
+    const chipGroup = chip.closest('.chips-row');
+    const groupName = chipGroup.id === 'chips-acabado' ? 'filtro_acabado' : 'filtro_formato';
+    if (groupName === inputName) {
+      const input = document.createElement('input');
+      input.type  = 'hidden';
+      input.name  = inputName;
+      input.value = chip.textContent.trim();
+      form.appendChild(input);
+    }
+  });
+}
+
+// Re-abrir filtros si venimos de un POST con filtros activos
+window.addEventListener('DOMContentLoaded', () => {
+  const hayFiltros = document.querySelectorAll('.chip.selected').length > 0;
+  if (hayFiltros) {
+    document.getElementById('filtros-grid').classList.add('open');
+    document.getElementById('filtros-arrow').classList.add('open');
+    // Sync hidden inputs on load
+    syncHiddenInputs('filtro_acabado');
+    syncHiddenInputs('filtro_formato');
+  }
+});
+
+// ── Selectores ──
 function actualizarTonoSeleccionado() {
   const hex = document.getElementById('tono').value;
   const dot = document.getElementById('color-dot');
@@ -266,7 +365,7 @@ function cargarProductos() {
 }
 
 function cargarTonos() {
-  const marcaId = document.getElementById('marca').value;
+  const marcaId    = document.getElementById('marca').value;
   const productoId = document.getElementById('producto').value;
   fetch('/tonos/' + marcaId + '/' + productoId)
     .then(r => r.json())

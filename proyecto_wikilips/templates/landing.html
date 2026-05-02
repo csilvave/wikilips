@@ -11,7 +11,6 @@
     padding: 80px 48px;
     gap: 80px;
   }
-
   .eyebrow {
     font-size: 11px;
     letter-spacing: 4px;
@@ -20,7 +19,6 @@
     font-weight: 400;
     margin-bottom: 24px;
   }
-
   .hero h1 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 72px;
@@ -29,7 +27,6 @@
     margin-bottom: 24px;
   }
   .hero h1 em { font-style: italic; color: var(--rosa); }
-
   .hero p {
     font-size: 14px;
     font-weight: 300;
@@ -39,7 +36,6 @@
     margin-bottom: 48px;
     letter-spacing: 0.3px;
   }
-
   .swatch-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -48,24 +44,13 @@
     max-width: 380px;
     margin-left: auto;
   }
-
-  .swatch {
-    aspect-ratio: 1;
-    border-radius: 2px;
-  }
-
+  .swatch { aspect-ratio: 1; border-radius: 2px; }
   hr.divider {
     border: none;
     border-top: 0.5px solid var(--nude-faint);
     margin: 0 48px;
   }
-
-  .stats {
-    display: flex;
-    gap: 64px;
-    padding: 40px 48px;
-  }
-
+  .stats { display: flex; gap: 64px; padding: 40px 48px; }
   .stat-num {
     font-family: 'Cormorant Garamond', serif;
     font-size: 40px;
@@ -75,7 +60,6 @@
     line-height: 1;
     margin-bottom: 6px;
   }
-
   .stat-label {
     font-size: 10px;
     letter-spacing: 3px;
@@ -83,19 +67,16 @@
     color: rgba(240,235,228,0.35);
     font-weight: 400;
   }
-
   .how-section {
     padding: 80px 48px;
     border-top: 0.5px solid var(--nude-faint);
   }
-
   .steps {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 48px;
     margin-top: 48px;
   }
-
   .step-num {
     font-family: 'Cormorant Garamond', serif;
     font-size: 48px;
@@ -104,7 +85,6 @@
     line-height: 1;
     margin-bottom: 16px;
   }
-
   .step h3 {
     font-family: 'Cormorant Garamond', serif;
     font-size: 22px;
@@ -112,14 +92,12 @@
     color: var(--nude);
     margin-bottom: 10px;
   }
-
   .step p {
     font-size: 13px;
     color: var(--nude-muted);
     line-height: 1.8;
     font-weight: 300;
   }
-
   @media (max-width: 768px) {
     .hero { grid-template-columns: 1fr; padding: 48px 24px; }
     .hero h1 { font-size: 52px; }
@@ -165,16 +143,12 @@
 
 <div class="stats">
   <div>
-    <span class="stat-num">168</span>
+    <span class="stat-num">{{ stats.tonos }}</span>
     <span class="stat-label">Tonos</span>
   </div>
   <div>
-    <span class="stat-num">16</span>
+    <span class="stat-num">{{ stats.marcas }}</span>
     <span class="stat-label">Marcas</span>
-  </div>
-  <div>
-    <span class="stat-num">4</span>
-    <span class="stat-label">Acabados</span>
   </div>
   <div>
     <span class="stat-num">∞</span>
@@ -198,7 +172,7 @@
     <div class="step">
       <div class="step-num">03</div>
       <h3>Descubre la alternativa</h3>
-      <p>Te mostramos el tono más similar disponible en otra marca o producto.</p>
+      <p>Te mostramos los tonos más similares disponibles en otras marcas o productos.</p>
     </div>
   </div>
 </div>
